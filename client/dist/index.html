@@ -1,0 +1,80 @@
+<html>
+  <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <title>Bitcoin Alerts</title>
+      <meta name="manifest" content="mainfest.json">
+  </head>
+  <body>
+    <header>
+      <p class="title">
+        Bitcoin Alerts
+        <a href="https://bitcoin.com">
+          <img src="https://i.imgur.com/NR4D7aS.png" class="bitcoin-logo" alt="Logo: Bitcoin">
+        </a>
+      </p>
+
+      <!-- Custom Button Navigation Panel -->
+      <div class="button-nav">
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+          Visit Admin Page
+        </button>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+          Read the Blog post
+        </button>
+      </div> 
+    </header>
+    <div class="container">
+      <div class="subscription-toggle">
+        <div class="push-card mdl-card mdl-shadow--2dp">
+          <div class="mdl-card__title mdl-card--border">
+            <div class="mdl-card__title-text">Push Notifications Subscription</div>
+          </div>
+          <div class="mdl-card__supporting-text">
+            Push Notification Status: <span class="subscription-status">Disabled</span>
+          </div>
+          <div class="mdl-card__actions mdl-card--border">
+            <div class="main-switch">
+              <label for="sub-switch" class="mdl-switch mdl-js-switch mdl-js-ripple-effect">
+                <input type="checkbox" id="sub-switch" class="mdl-switch__input">
+                <span class="mdl-switch__label">Push Subscription</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="subscription-info" style="display:none">
+        <div class="push-card subscription-card mdl-card mdl-shadow--2dp">
+          <div class="mdl-card__title mdl-card--border">
+            <div class="mdl-card__title-text">Subscription Information</div>
+          </div>
+          <div class="mdl-card__supporting-text mdl-card--border">
+            <p>Subscription details, that have been sent to the Server</p>
+            <p class="code" id="subscription-code">
+              Hello World
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="not-supported">
+        <div class="push-card mdl-card mdl-shadow--2dp">
+          <div class="mdl-card__title mdl-card--border">
+            <div class="mdl-card__title-text">Demo is not supported on your browser :(</div>
+          </div>
+          <div class="mdl-card__supporting-text">
+            <p>
+              ServiceWorker and Push API both need to be supported in order for
+              this demo to work properly. If unsupprted by your browser, please upgrade to
+              the latest version of browser which supports these APIs.
+              <a href="https://caniuse.com"><b>Can I Use</b></a> is a helpful site,
+              to see which popular browsers and their versions support the above APIs.
+            </p>
+            <ul class="support-status">
+              <li class="service-worker">ServiceWorker: <span class="value">Unknown</span></li>
+              <li class="push-api">Push API: <span class="value">Unknown</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  <script type="text/javascript" src="/app.js"></script></body>
+</html>
