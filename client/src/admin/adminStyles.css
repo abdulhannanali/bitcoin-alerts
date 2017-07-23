@@ -1,0 +1,122 @@
+body {
+  margin: 0;
+}
+
+header {
+  background-image: url('../assets/bitcoin-back.jpg');
+  background-size: cover;
+  background-position: 10px;
+  background-color: darkorange;
+  background-blend-mode: overlay;
+  padding: 100px;
+  color: white;
+}
+
+header .title {
+  display: inline-block;
+  color: white;
+  background-color: darkorange;
+  padding: 20px;
+  font-size: 42px;
+  font-family: Courier New, Courier, monospace;
+  box-sizing: border-box;
+}
+
+header .description {
+  display: inline-block;
+  font-family: monospace;
+  padding: 20px;
+  color: white;
+  font-size: 20px;
+  margin: 20px 20px;
+  background-color: green;
+}
+
+/* Stylizing the Header buttons */
+header div.buttons-panel {
+  margin: 20px;
+  padding: 20px;
+  box-shadow: 2px 2px 2px 2px orange;
+  background-color: saddlebrown;
+  display: inline-block;
+}
+
+.buttons-panel .mdl-button {
+  margin: 5px auto;
+}
+
+
+.container {
+  margin: auto;
+  max-width: 900px;
+  padding: 30px;
+}
+
+div.mdl-card.admin-page-card {
+  width: 100%;
+  margin: 30px auto;
+}
+
+div.mdl-card.about-card {
+  min-height: 20px;
+  padding: 0;
+}
+
+/*
+ * Container for the Alert Cards
+ */
+.alert-cards {
+  margin: auto;
+  width: 100%;
+  display: block;
+}
+
+div.mdl-card.alert-card {
+  position: relative;
+  min-height: 200px;
+  width: 100%;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: darkorange;
+  color: white;
+}
+
+.mdl-card.alert-card .mdl-card__title-text {
+  font-size: 40px;
+  color: white;
+  font-family: Courier New, Courier, monospace;
+}
+
+.alert-card .mdl-card__supporting-text {
+  background-color: orange;
+  color: lightcyan;
+}
+
+.alert-card .mdl-card__media {
+  background-color: white;
+}
+
+.alert-card .mdl-card__media img {
+  height: 120px;
+  margin: auto;
+  display: inline-block;
+}
+
+.alert-card .mdl-card__form-input {
+  padding: 10px 10px;
+  padding-bottom: 5px;
+}
+
+.form-input__error {
+  color: red;
+}
+
+.alert-card .alert-logo {
+  height: 48px;
+  margin-left: 5px;
+}
+
+@media (min-width: 600px) {
+
+}

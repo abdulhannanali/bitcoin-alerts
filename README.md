@@ -84,3 +84,28 @@ both using the action as well as a generic touch/click event on the notification
 
 Designing the notifications and the associated images for these notifications
 - Badge (Android badge for any bitcoin would work)
+
+##### Bitcoin admin page
+
+In order to trigger events, we need an admin page. In reality when using an application 
+similar to Bitcoin Alerts, the notification will be triggered in response to an event such as
+a surge in the rates of Bitcoin, or any other major event related to Bitcoins but since we 
+don't have that backend. Our events are going to be triggered using an Admin Page.
+
+###### Conception of Admin Page
+
+Admin Page will trigger two events one in order to send a notification to a specific
+user using their identification and other for sending the notification
+to all users. UI should be kept relatively simple and what matters more is
+it's a lot managable and very similar to the Bitcoin Alerts Notification Page,
+but with support for admin configurations.
+
+For the first concept there can be two cards. One card can be used to send the notification 
+to all the subscribers in our list. The other card can be used to send the notification
+to a specific subscriber by using the Server id stored in the database for the subscriber.
+
+Tasks to complete for the application
+
+- Complete the Admin Page and Alert Functionality (Design is approximately done)
+- Code the Bitcoin Alerts Admin Page Subscriber Card!
+- Push this and refine some more changes on the second branch

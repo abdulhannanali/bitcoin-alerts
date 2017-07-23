@@ -5,8 +5,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = [
   {
     entry: {
-      app: './app/index.js',
-      admin: './app/index.js'
+      app: './src/app/index.js',
+      admin: './src/admin/index.js'
     },
     output: {
       filename: '[name].js',
@@ -69,6 +69,7 @@ module.exports = [
         showErrors: true,
       }),
       new HtmlWebpackPlugin({
+        title: 'Bitcoin Alerts | Admin Page', 
         filename: 'admin.html',
         template: 'templates/admin.html',
         chunks:['admin'],
