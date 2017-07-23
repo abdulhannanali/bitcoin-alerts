@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const coindesk = require('node-coindesk-api');
 const webPush = require('web-push');
 const DataStore = require('nedb');
+const cors = require('cors');
 
 const VAPID_PUBLIC_KEY = process.env.VAPID_PUBLIC_KEY;
 const VAPID_PRIVATE_KEY = process.env.VAPID_PRIVATE_KEY;
@@ -17,7 +18,11 @@ const HOST = process.env.HOST || '0.0.0.0';
 const app = express();
 
 app.disable('x-powered-by');
-app.use(morgan('dev'))
+app.use(morgan('dev'));
+
+// Enable CORS for all the requests
+app.use(cors());
+app.options('*', cors());
 
 webPush.setVapidDetails(VAPID_SUBJECT, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY)
 
@@ -27,6 +32,10 @@ db.subscribers = new DataStore({ filename: 'subscribers.db', autoload: true });
 
 app.use(bodyParser.json());
 
+/**
+ * bitcoin_rate endpoint used for  admin page to display the current rate 
+ * not required for push notifiications
+ */
 app.get('/bitcoin_rate', function (req, res, next) {
   const currency = req.query.currency;
   coindesk.getCurrentPrice(currency)
@@ -48,7 +57,7 @@ app.get('/subscriber', function (req, res, next) {
 
 app.post('/subscriber', checkSubscription, function (req, res, next) {
   const subscription = req.body.subscription;
-  
+
   return db.subscribers.insert(subscription, function (error, newDoc) {
     if (error) return next(error);
     res.json(newDoc);
@@ -142,7 +151,7 @@ function triggerPush(subscription, pushPayload) {
  * in the future
  */
 function triggerWelcomeNotification(subscription) {
-  return triggerPush(subscription, { type: 'welcome' });
+  return triggerPush(subscription, { type: 'welcome' })
 }
 
 /**
@@ -180,6 +189,7 @@ function getAllSubscriptions() {
  * Truly, a helper method to handle validation
  */
 function checkSubscription(req, res, next) {
+  console.log(req.body);
   if (!req.body.subscription) {
     return next(new Error('Subscription is not provided, please pass a subscription in body'));
   } else {
