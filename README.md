@@ -119,5 +119,11 @@ Tasks to complete for the application
  can be a time consuming process. A more easier thing to do will be to do the manipulations
  on the client side, and use those manipulations to make sense of the data.
 
+ Final task before we can move on to other things.
+
+ ### Features for future
+ 
+ Create a wider range of control using the Admin Page present to display Bitcoin Alerts.
+ Enable options for creating and removing supscribptions too.
 
 ### Add a Specific Subscriber ID version
