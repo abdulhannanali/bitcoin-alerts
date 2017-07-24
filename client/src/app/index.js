@@ -147,44 +147,87 @@ function updateSubscriptionUI(subscription) {
 }
 
 /**
- * Subscription storing logic
- * This function call also saves an id
+ * Updates the Subscription on the Server side
+ * if new
  */
 function updateServerSubscription(subscription) {
   return localForage.getItem('subscription')
     .then(function (savedSubscription) {
-      if (subscription.endpoint === savedSubscription.endpoint) {
+      savedSubscription = JSON.parse(savedSubscription);
+      const { shouldUpdate, shouldDelete } = evalSubscriptionConditions(
+        savedSubscription,
+        subscription
+      );
 
+     if (!shouldUpdate && !shouldDelete) {
+        console.log('Both Subscriptions are same, do nothing');
+        return savedSubscription;
       }
 
-      // The previous subscription should be deleted here ideally,
-      // so we can enjoy the new subscription
-      serverSubscription.createSubscription(subscription)
-        .then(function (response) {
-          const subscriptionData = response.data;
-          localForage.setItem('subscription', JSON.stringify(subscriptionData));
-          displayPushInfo(subscription);
-          displayServerResponse(subscriptionData);
-        })
-        .catch(function (error) {
-          // TODO: At this point the operation should have been retried a fair number of 
-          // times and the toggle should be disabled back, as they actually haven't been
-          // enabled  
-          displayServerError();
-          console.error('Failed to update the status on the server');
-          console.error(error);
-        });
+      if (shouldUpdate) {
+        /**
+         * Further actions are dependent on successful 
+         * createion of subscription on database
+         * 
+         * This promise is going to be included within the promise chain.
+         */
+        return serverSubscription.createSubscription(subscription)
+          .then(response => {
+            const data = response.data;
+            console.log('Subscription Created ', data);
+            return localForage.setItem('subscription', JSON.stringify(data)).then(() => data);
+          });
+      } else if (shouldDelete) {
+        return localForage.setItem('subscription', null)
+          .then(() => {
+            serverSubscription.deleteSubscription(savedSubscription._id)
+            return null;
+          });
+      }
+    })
+    .then(function (newSubscription) {
+      // UI can be updated in this then function
+      // as related operations to the subscriptions have been performed on them
+      if (subscription) {
+        console.log('Displaying information for the subscription');
+        displayPushInfo(subscription);
+        displayServerResponse(newSubscription);
+      }
+    })
+    .catch(function (error) {
+      console.error('Failure in updating the status');
+      console.error(error);
+      displayServerError(error);
     });
 }
 
-// TODO Update the Update Subscription Server Logic
-// /**
-//  * Check if the subscription is latest
-//  * @return {Promise<Boolean>} `true` if the subscription is latest otherwise returns false
-//  */
-// function shouldUpdateSubscription(savedSubscription, subscription) {
-//   if ()
-// }
+/**
+ * Evaluate related conditions to the subscription
+ */
+function evalSubscriptionConditions(savedSubscription, subscription) {
+  const endpointCondition = (
+    savedSubscription && subscription &&
+    savedSubscription.endpoint !== subscription.endpoint
+  );
+
+  return {
+    shouldUpdate: !savedSubscription && subscription || endpointCondition,
+    shouldDelete: !subscription && savedSubscription,
+  };
+}
+
+/**
+ * Based on conditions when the subscription should 
+ * be deleted
+ * 
+ * @param {PushSubscription} savedSubscription Subscription stored in the storage
+ */
+function shouldDeleteSubscription(savedSubscription, subscription) {
+  return (
+    !subscription ||
+    savedSubscription.endpoint
+  )
+}
 
 /**
  * Removes the Subscription from the Client

@@ -18,7 +18,10 @@ function createSubscription (subscription) {
 
 function deleteSubscription (subscriptionId) {
   return axios.delete(subscriberURL, {
-    id: subscriptionId
+    data: {
+      id: subscriptionId
+    },
+    responseType: 'json',
   });
 }
 
