@@ -1,0 +1,131 @@
+<!--
+  Admin Page
+  This will be a way to trigger the Bitcoin Push Notifications
+-->
+<html>
+  <head>
+    <title>Bitcoin Alerts | Admin Page</title>
+    <meta name="charset" content="utf-8">
+
+    <!--Includes the Externals in the production environment to reuse the Common MDL CSS-->
+    
+    <!--Material Design Lite Stylesheet and Script-->
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.orange-deep_orange.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+  <link href="/admin.css" rel="stylesheet"></head>
+  <body>
+    <header>
+      <div class="title">Bitcoin Alerts Admin Page</div>
+      <div class="description">Trigger Bitcoin Alerts through admin page</div>
+      <div class="buttons-panel">
+        <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" href="./">
+          Visit Notifications Page
+        </a>
+        <a href="https://coindesk.com/price" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+          Powered by Coindesk
+        </a>
+      </div>
+    </header>
+    <div class="container">
+      <div class="alert-cards">
+        <!--
+          Card for sending alerts to a specific subscriber
+          TODO: Implement the Server and continue working on this card
+        -->
+        <div class="subscriber-card alert-card mdl-card mdl-shadow--16dp">
+          <div class="mdl-card__title">
+            <div class="mdl-card__title-text">
+              Subscriber!
+              <img src="https://lh6.ggpht.com/Nq4ZWlPAMdhQc8h9ABFEb45z7xojyTllqblOcla2bIrn0WT0E77VJs3tB5o1ZZzrP3yx=w300" alt="Bitcoin Alarm" class="alert-logo">
+            </div>
+          </div>
+          <div class="mdl-card__supporting-text">
+            Alert a specific subscriber using the server identification
+            provided in the response after the subscription creation.
+            You can find this Server ID on the bitcoin notification page. Enter this ID
+            to proceed with alerting a specific user.
+          </div>
+          <div class="mdl-card__form-input">
+            <form action="#">
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input type="text" class="mdl-textfield__input" id="server-id">
+                <label for="server-id" class="mdl-textfield__label">Server ID</label>
+                <span class="mdl-textfield__error">Incorrect Server ID!</span>
+              </div>
+            </form>
+          </div>
+          <div class="mdl-card__actions">
+            <a href="#" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent alert-action">Alert Subscriber!</a>
+          </div>
+        </div>
+
+        <div class="subscribers-card alert-card mdl-card mdl-shadow--16dp">
+          <div class="mdl-card__title">
+            <div class="mdl-card__title-text">
+              Subscribers!
+              <img src="https://lh6.ggpht.com/Nq4ZWlPAMdhQc8h9ABFEb45z7xojyTllqblOcla2bIrn0WT0E77VJs3tB5o1ZZzrP3yx=w300" alt="Bitcoin Alert Logo" class="alert-logo">
+              <img src="https://lh6.ggpht.com/Nq4ZWlPAMdhQc8h9ABFEb45z7xojyTllqblOcla2bIrn0WT0E77VJs3tB5o1ZZzrP3yx=w300" alt="Bitcoin Alert Logo" class="alert-logo">
+              <img src="https://lh6.ggpht.com/Nq4ZWlPAMdhQc8h9ABFEb45z7xojyTllqblOcla2bIrn0WT0E77VJs3tB5o1ZZzrP3yx=w300" alt="Bitcoin Alert Logo" class="alert-logo">
+            </div>
+          </div>
+          <div class="mdl-card__supporting-text">
+            Send Push Notifications to all the subscribed users, with their information,
+            present in the database. This operation doesn't need any information and can be
+            performed as is.
+          </div>
+          <div class="mdl-card__actions">
+            <a href="#" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">Alert Subscribers!</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="response-card mdl-card mdl-shadow--16dp">
+        <div class="mdl-card__title">
+          <h1 class="mdl-card__title-text">Last Response Received</h1>
+        </div>
+        <div class="mdl-card__supporting-text">
+          Details about the last received response from the Server API. This feature is 
+          provided for the diagnosis purposes.
+        </div>
+        <div class="mdl-card__response">
+          <h5>Response Status</h5>
+          <div class="response-status">Do some action to view the response here</div>
+          <h6>Response</h6>
+          <pre class="response">Response will be displayed here once available.</pre>
+        </div>
+        <div class="mdl-card__actions">
+          <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored raw-open-button" target="_blank" rel="noopener">
+            Open Raw Response
+          </a>
+          <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--accent copy-response-button">Copy To Clipboard <i class="material-icons">&#xE14D;</i></a>
+        </div>
+      </div>
+      <!--
+        IGNORE
+        About Card providing information about the Bitcoin Page
+      -->
+      <div class="admin-page-card about-card mdl-card mdl-shadow--2dp">
+        <div class="mdl-card__title mdl-card--border">
+          <div class="mdl-card__title-text">About Admin Page!</div>
+        </div>
+        <div class="mdl-card__supporting-text">
+          Admin page is used to trigger Bitcoin Push Notifications to all 
+          the subscribers on the server or to a specific one using 
+          the id of the subscriber stored in the database.
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+          <a href="https://github.com/abdulhannanali/bitcoin-alerts" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Fork on Github</a>
+        </div>
+      </div>
+    </div>
+
+    <!--Material Design Atomic Components-->
+    <!--Material Snackbar HTML-->
+    <div id="snackbar-container" class="mdl-snackbar mdl-js-snackbar" aria-live="assertive" aria-atomic="true" aria-relevant="text">
+      <div class="mdl-snackbar__text"></div>
+      <div class="mdl-snackbar__action"></div>
+    </div>
+  <script type="text/javascript" src="/admin.bundle.js"></script></body>
+</html>
