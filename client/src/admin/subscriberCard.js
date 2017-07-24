@@ -16,6 +16,7 @@ alertAction.addEventListener('click', function (clickEvent) {
       console.log(response);
     })
     .catch(function (error) {
+      console.log('Error occured in bitcoin request');
       console.error(error);
     });
 });

@@ -109,3 +109,5 @@ Tasks to complete for the application
 - Complete the Admin Page and Alert Functionality (Design is approximately done)
 - Code the Bitcoin Alerts Admin Page Subscriber Card!
 - Push this and refine some more changes on the second branch
+- Build a Production Version of client
+- Implement Specific Subscriber Logic

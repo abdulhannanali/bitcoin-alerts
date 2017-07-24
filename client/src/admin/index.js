@@ -1,6 +1,5 @@
 import serverApi from './serverApi';
 
-import '../styles/styles.js';
 import './adminStyles.css';
 
 const subscribersCard = document.querySelector('.alert-card.subscribers-card');

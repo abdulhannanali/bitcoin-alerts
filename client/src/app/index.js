@@ -1,6 +1,5 @@
 // Imports all the Custom Styles as well as Material Design Lite
 // Using a Webpack Familiar Syntax
-import '../styles/styles.js';
 import './appStyles.css';
 
 import axios from 'axios';
