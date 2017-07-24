@@ -40,16 +40,6 @@ const finalConfig = Merge(commonConfig, {
       },
       comments: false,
     }),
-    new webpack.DefinePlugin({
-      'process': {
-        'env': {
-          'NODE_ENV': 'production',
-          'HELLO': 'WORLD',
-          'WHAT': 'IS THIS?',
-          'BREATHE': 'DEEP'
-        }
-      }
-    }),
   ]
 });
 

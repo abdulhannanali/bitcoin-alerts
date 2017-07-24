@@ -4,8 +4,8 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "start": "webpack-dev-server",
-    "build": "webpack",
+    "start": "webpack-dev-server --env=dev",
+    "build": "webpack --env=prod --display=verbose",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
