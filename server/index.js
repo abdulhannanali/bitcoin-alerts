@@ -8,6 +8,8 @@ const webPush = require('web-push');
 const DataStore = require('nedb');
 const cors = require('cors');
 
+const isEmpty = require('lodash.isempty');
+
 const VAPID_PUBLIC_KEY = process.env.VAPID_PUBLIC_KEY;
 const VAPID_PRIVATE_KEY = process.env.VAPID_PRIVATE_KEY;
 const VAPID_SUBJECT = process.env.VAPID_SUBJECT_EMAIL;
@@ -18,6 +20,10 @@ const HOST = process.env.HOST || '0.0.0.0';
 const app = express();
 
 app.disable('x-powered-by');
+
+// APIs shouldn't be using etag for non deterministic operations
+app.disable('etag');
+
 app.use(morgan('dev'));
 
 // Enable CORS for all the requests
@@ -88,25 +94,53 @@ app.get('/subscribers', function (req, res, next) {
  * Handler to Push the bitcoin price to all the subscribers
  */
 app.get('/push_bitcoin', function (req, res, next) {
-  return getAllSubscriptions()
-    .then(function (subscribers) {
-      if (subscribers.length === 0 && !subscribers[0]) {
-        return res.json({ message: 'There are no subscriptions to send to, create a subscription first'})
+  const { id = 'all' } = req.query;
+  return triggerBitcoinPush(id)
+    .then(function (bitcoinData) {
+      res.json(bitcoinData);
+    })
+    .catch(function (error) {
+      if (error.message && error.message.match(/no_subscriptions/ig)) {
+        res.status(400).json({ message: 'There are no subscriptions in the database to send notifications to'});
+      } else if (error.message && error.message.match(/not_found/ig)) {
+        res.status(404).json({ message: 'The given subscription was not found'})
+      } else {
+        next(error);
       }
-
-      return coindesk.getCurrentPrice().then(function (data) {
-        const usdBpi = data.bpi.USD;
-        return triggerPushAll(subscribers, { type: 'bitcoin_rate', price: usdBpi });
-      })
-      .then(function (response) {
-        res.status(200).send(response);
-      })
-      .catch(function (error) {
-        console.error(error);
-        res.status(500).send({ message: 'Error occured while handling the request'});
-      });
     });
 });
+
+/**
+ * Triggers a Bitcoin Push Notification
+ * for the subscriber
+ * 
+ * `subscriber` is the id of the subscriber stored in the database.
+ * if `subscriber` is `all` bitcoin push notifications 
+ * are triggered for all subscribers
+ */
+function triggerBitcoinPush(subscriber) {
+  return coindesk.getCurrentPrice()
+    .then(function (data) {
+      const usdBpi = data.bpi.USD;
+      if (subscriber === 'all') {
+        return getAllSubscriptions()
+          .then(function (subscribers) {
+            if (isEmpty(subscribers)) {
+              throw new Error('no_subscriptions');
+            }
+            return triggerPushAll(subscribers, { type: 'bitcoin_rate', price: usdBpi });
+        });  
+      } else {
+        return getSubscription(subscriber)
+          .then(function (newDoc) {
+            if (!isEmpty(newDoc)) {
+              return triggerPush(newDoc[0], { type: 'bitcoin_rate', price: usdBpi });
+            }
+            throw new Error('not_found');
+          });
+      }
+    });
+}
 
 /**
  * Trigger Push for All Subscriptions
@@ -195,6 +229,16 @@ function checkSubscription(req, res, next) {
   } else {
     return next();
   }
+}
+
+/**
+ * Gets a Subscription using it's id
+ * to which we can send the push notification
+ */
+function getSubscription(id) {
+  return new Promise(function (resolve, reject) {
+    db.subscribers.find({ _id: id }, (error, doc) => error ? reject(error) : resolve(doc));
+  });
 }
 
 app.listen(PORT, HOST, function (error) {

@@ -153,6 +153,10 @@ function updateSubscriptionUI(subscription) {
 function updateServerSubscription(subscription) {
   return localForage.getItem('subscription')
     .then(function (savedSubscription) {
+      if (subscription.endpoint === savedSubscription.endpoint) {
+
+      }
+
       // The previous subscription should be deleted here ideally,
       // so we can enjoy the new subscription
       serverSubscription.createSubscription(subscription)
@@ -172,6 +176,15 @@ function updateServerSubscription(subscription) {
         });
     });
 }
+
+// TODO Update the Update Subscription Server Logic
+// /**
+//  * Check if the subscription is latest
+//  * @return {Promise<Boolean>} `true` if the subscription is latest otherwise returns false
+//  */
+// function shouldUpdateSubscription(savedSubscription, subscription) {
+//   if ()
+// }
 
 /**
  * Removes the Subscription from the Client

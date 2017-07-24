@@ -7,8 +7,9 @@ const serverInfo = subscriptionInfoCard.querySelector('.code.server-subscription
 const subscriptionInfo = subscriptionInfoCard.querySelector('.code.info');
 const serverId = subscriptionInfoCard.querySelector('.code.server-id');
 
-const LOADING_TEXT = 'Loading....';
-
+/**
+ * Displays the Push Info
+ */
 function displayPushInfo(pushSubscription) {
   if (!pushSubscription) {
     subscriptionInfoCard.style.display = 'none';

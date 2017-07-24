@@ -15,7 +15,15 @@ const SERVER_API_HOST = 'http://localhost:3000/';
  * - serverId - send the push notification to the given server id
  */
 export function sendBitcoinAlert(targetSubscriber) {
-  return axios.get(SERVER_API_HOST + 'push_bitcoin');
+  if (targetSubscriber === 'all') {
+    return axios.get(SERVER_API_HOST + 'push_bitcoin');
+  } else {
+    return axios.get(SERVER_API_HOST + 'push_bitcoin', {
+      params: {
+        id: targetSubscriber,
+      }
+    })
+  }
 }
 
 

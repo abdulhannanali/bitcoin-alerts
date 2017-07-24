@@ -34,7 +34,7 @@
           Card for sending alerts to a specific subscriber
           TODO: Implement the Server and continue working on this card
         -->
-        <!--<div class="alert-card mdl-card mdl-shadow--16dp">
+        <div class="subscriber-card alert-card mdl-card mdl-shadow--16dp">
           <div class="mdl-card__title">
             <div class="mdl-card__title-text">
               Subscriber!
@@ -44,7 +44,7 @@
           <div class="mdl-card__supporting-text">
             Alert a specific subscriber using the server identification
             provided in the response after the subscription creation.
-            You can find this Server ID on the bitcoin configuration page. Enter this ID
+            You can find this Server ID on the bitcoin notification page. Enter this ID
             to proceed with alerting a specific user.
           </div>
           <div class="mdl-card__form-input">
@@ -59,7 +59,7 @@
           <div class="mdl-card__actions">
             <a href="#" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent alert-action">Alert Subscriber!</a>
           </div>
-        </div>-->
+        </div>
 
         <div class="subscribers-card alert-card mdl-card mdl-shadow--16dp">
           <div class="mdl-card__title">
@@ -78,6 +78,27 @@
           <div class="mdl-card__actions">
             <a href="#" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">Alert Subscribers!</a>
           </div>
+        </div>
+      </div>
+
+      <div class="response-card mdl-card mdl-shadow--16dp">
+        <div class="mdl-card__title">
+          <h1 class="mdl-card__title-text">Last Response Received</h1>
+        </div>
+        <div class="mdl-card__supporting-text">
+          Details about the last received response from the Server API. This feature is 
+          provided for the diagnosis purposes.
+        </div>
+        <div class="mdl-card__response">
+          <h5>Response Status</h5>
+          <div class="response-status">Do some action to view the response here</div>
+          <h6>Response</h6>
+          <pre class="response">Response will be displayed here once available.</pre>
+        </div>
+        <div class="mdl-card__actions">
+          <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored raw-open-button" target="_blank" rel="noopener">
+            Open Raw Response
+          </a>
         </div>
       </div>
       <!--

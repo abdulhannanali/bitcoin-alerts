@@ -106,8 +106,18 @@ to a specific subscriber by using the Server id stored in the database for the s
 
 Tasks to complete for the application
 
-- Complete the Admin Page and Alert Functionality (Design is approximately done)
-- Code the Bitcoin Alerts Admin Page Subscriber Card!
-- Push this and refine some more changes on the second branch
-- Build a Production Version of client
-- Implement Specific Subscriber Logic
+- Complete the Admin Page and Alert Functionality (Design is approximately done) (done)
+- Code the Bitcoin Alerts Admin Page Subscriber Card! (done)
+- Build a Production Version of client (done)
+- Implement Specific Subscriber Logic (done)
+
+ Refrain from creating a new subscriber every time the page is refreshed. This is one of
+ the biggest problems we are facing, as it creates multiple accounts for a given user.
+ Creating a new subscription can be acheived through finding the subscribers based on the endpoint, 
+
+ Creating a server id, and then getting identified by that server id,
+ can be a time consuming process. A more easier thing to do will be to do the manipulations
+ on the client side, and use those manipulations to make sense of the data.
+
+
+### Add a Specific Subscriber ID version
