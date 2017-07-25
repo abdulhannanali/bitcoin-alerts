@@ -4,7 +4,7 @@
  */
 import axios from 'axios';
 
-const SERVER_BASE_URL = 'http://localhost:3000/'
+const SERVER_BASE_URL = process.env.DEFAULT_SERVER_URL;
 const subscriberURL = SERVER_BASE_URL + 'subscriber';
 /**
  * Creates the Subscription on the Server 

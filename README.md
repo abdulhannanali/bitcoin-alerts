@@ -119,6 +119,11 @@ Tasks to complete for the application
  can be a time consuming process. A more easier thing to do will be to do the manipulations
  on the client side, and use those manipulations to make sense of the data.
 
+ Add a Deploy to Now button to the Github repo.
+ Eliminate Mixed Content. 
+ Write README.md for the Client and Server
+ Write Blog post
+
  Final task before we can move on to other things.
 
  ### Features for future

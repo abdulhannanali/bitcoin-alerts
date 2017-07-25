@@ -34,7 +34,7 @@ webPush.setVapidDetails(VAPID_SUBJECT, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY)
 
 const db = {};
 
-db.subscribers = new DataStore({ filename: 'subscribers.db', autoload: true });
+db.subscribers = new DataStore({ filename: '/tmp/subscribers.db', autoload: true });
 
 app.use(bodyParser.json());
 

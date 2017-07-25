@@ -6,7 +6,10 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const finalConfig = Merge(commonConfig, {
-  devtool: 'cheap-module-source-map',
+  devtool: 'source-map',
+  output: {
+    publicPath: './'
+  },
   module: {
     rules: [
       {
@@ -40,6 +43,14 @@ const finalConfig = Merge(commonConfig, {
       },
       comments: false,
     }),
+    new webpack.DefinePlugin({
+      'process': {
+        'env': {
+          'NODE_ENV': JSON.stringify('production'),
+          'DEFAULT_SERVER_URL': JSON.stringify('https://server-xvcfivqgya.now.sh/'),
+        }
+      }
+    })
   ]
 });
 

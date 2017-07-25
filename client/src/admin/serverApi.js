@@ -4,7 +4,8 @@ import axios from 'axios';
  * to the application server in order to create push notifications
  */
 
-const SERVER_API_HOST = 'http://localhost:3000/';
+const { DEFAULT_SERVER_URL } = process.env;
+const SERVER_API_HOST = DEFAULT_SERVER_URL || 'http://localhost:3000';
 
 /**
  * Sends a Bitcoin Alert to the provided
