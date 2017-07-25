@@ -7,9 +7,9 @@
 Open Web Standards make the web great, and it's always exciting to experiment with new features
 on Web. Push Notifications are a very powerful way to [engage and retain](https://developers.google.com/web/fundamentals/engage-and-retain) customers on the web, and provides instant communication with them.
 
-The Web Push Protocol is a secure way to implement Push Notifications using technologies such as VAPID and Secure Content encryption for the payload, making it more secure if you don't want to trust any third party to handle your encrypted. Implementing them using this Standard is the best choice.
+The Web Push Protocol is a secure way to implement Push Notifications using technologies such as VAPID and Secure Content encryption for the payload, making it more secure if you don't want to trust any third party to handle your sensitive data. Implementing Push Notifications system based on Web Push Protocol will be the best choice for you.
 
-Third parties such as Firebase Cloud Messaging also implement this standard for the newer browsers under the hood but provide syntactic sugar and abstractions on top of it which makes things easier. So it's totally worth giving it the shot.
+Third party solutions such as [Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging/) also implement this standard for the latest browsers under the hood but provide syntactic sugar and abstractions on top of it which makes things easier. So, learning more about Web Push Protocol makes it totally worth the shot.
 
 ### About Bitcoin Alerts 
 
@@ -22,11 +22,12 @@ Bitcoin Alerts implements Web Push Protocol Standard and works [across browsers]
 
 This applications consists of a client side, to subscribe to the Push Notificaiton as well as trigger the Push Notifications, alongwith a server side used to Trigger the Push Notifications on the server side as well as storing the subscriptions. 
 
-### Code Structure
-
-Code for the client side can be found in the [client](./client) directory. 
-
-Code for the Server Side can be found in the [server](./server) directory.
+<!--
+  Write more about Application
+  The client side of the application and how it operates
+  The server side of the application
+  Code structure of the application
+-->
 
 <!--Is it necessary, It's useful but I still don't know if it's necessary to write this -->
 ### Application flow for the system
@@ -50,6 +51,9 @@ of our application to push alerts to either all or one specific subscriber. That
   ammendments and features to be 
 -->
 ## Contributions
+
+Software is never complete. If you find something you can improve on, you are going to Fix it and make a super awesome PR. You have all my force. Looking forward for your contribution. :heart:
+
 
 ## LICENSE
 
