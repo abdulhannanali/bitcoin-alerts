@@ -4,7 +4,7 @@
 const SERVICE_WORKER_VERSION = '1.0.0';
 
 // Global Constants related to notifications
-const NOTIFICATION_BADGE = 'http://www.coinsns.com/Uploads/Avatar/5833/568acac94774f_64_64.png';
+const NOTIFICATION_BADGE = 'https://i.imgur.com/3HjDHrq.png';
 const NOTIFICATION_ICON = 'https://i.imgur.com/GTQ2rGe.png';
 const NOTIFICATION_IMAGE = 'https://i.imgur.com/NR4D7aS.png';
 const DEFAULT_NOTIFICATION_LANG = 'en-US';
@@ -19,7 +19,7 @@ const urlLinks = {
 const POWERED_BY_COINDESK = {
     action: 'goto_api',
     title: 'Bitcoin Alerts powered by CoinDesk',
-    icon: 'http://media.coindesk.com/uploads/2016/07/favicon.ico'
+    icon: 'https://i.imgur.com/jQpadil.png'
 };
 
 self.addEventListener('install', function (installEvent) {
