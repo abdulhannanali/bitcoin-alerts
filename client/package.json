@@ -4,7 +4,7 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "start": "webpack-dev-server --env=dev",
+    "start": "webpack-dev-server --env=dev --progress --profile --colors",
     "deploy": "npm run build && gh-pages -d dist",
     "build": "webpack --env=prod --display=verbose",
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -1,134 +1,56 @@
-### Creating a client
+# Bitcoin Alerts
 
-A basic bitcoin client which provides the subscription in the output,
-and functions a lot like our previous work. But this is in Vanilla JavaScript.
+**Bitcoin Rate Alerts using [Web Push Notifications](https://developers.google.com/web/fundamentals/engage-and-retain/push-notifications/)**
 
-### ServerSide Notification System
+## Motivation
 
-The system for the ServerSide is a common Push Notification system based on storing 
-the Alerts for the user. This stores all the subscriptions in a database and can 
-send notifications to a specific one or all the subscribers in the system.
+Open Web Standards make the web great, and it's always exciting to experiment with new features
+on Web. Push Notifications are a very powerful way to [engage and retain](https://developers.google.com/web/fundamentals/engage-and-retain) customers on the web, and provides instant communication with them.
 
-How do I envision a server based Push Notification System for Bitcoin Alerts?
+The Web Push Protocol is a secure way to implement Push Notifications using technologies such as VAPID and Secure Content encryption for the payload, making it more secure if you don't want to trust any third party to handle your encrypted. Implementing them using this Standard is the best choice.
 
-These are CRUD operations and list can go on for these kinds of operations, but the key
-here is to be minimalistic.
-Then endpoints this system is going to contain will include:
+Third parties such as Firebase Cloud Messaging also implement this standard for the newer browsers under the hood but provide syntactic sugar and abstractions on top of it which makes things easier. So it's totally worth giving it the shot.
 
-- An endpoint to submit newly created subscription
-- An endpoint to get all the subscriptions
-- An endpoint to get the currency 
-- An endpoint to remove the subscriptions
-- An endpoint to delete all the subscriptions
+### About Bitcoin Alerts 
 
-How can we expand this system to account for groups?
+Bitcoin Alerts provides users with updated information on Bitcoin Exchange Rate from currently 
+Bitcoin to USD using the power of [Web Push Protocol](https://developers.google.com/web/fundamentals/engage-and-retain/push-notifications/web-push-protocol) without using any propreitary solution 
+such as [Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging/) staying 
+true to ther power of Web.
 
-First, we'll need a way, to collect subscribers based on a certain
-characteristic, whether by device group or location. Afterwards, we can just send
-the notifications to the given group.
+Bitcoin Alerts implements Web Push Protocol Standard and works [across browsers](http://caniuse.com/#feat=push-api) :smirk:. No authentication is required to run this demo but only some willingess and :heart.
 
-This is a nice problem to work on and one that hasn't been solved in the open world
-by anyone till now.
+This applications consists of a client side, to subscribe to the Push Notificaiton as well as trigger the Push Notifications, alongwith a server side used to Trigger the Push Notifications on the server side as well as storing the subscriptions. 
 
-### Microservices based Architecture.
+### Code Structure
 
-Some of the things our current applications are doing require
-processing power, as well as delays due to the network, separating the services for these
-tasks should give a performance boost as we can delegate, one heavy task of sending web push 
-notifications which involves encrypting the JSON Web Token as well as payload to this service.
+Code for the client side can be found in the [client](./client) directory. 
 
-So we can rapidly process our notifications and leave the delivery to this microservice, this 
-is a pattern I am going to further explore, but right now I am still working on 
-developing using Monolith.
+Code for the Server Side can be found in the [server](./server) directory.
 
-### Client
+<!--Is it necessary, It's useful but I still don't know if it's necessary to write this -->
+### Application flow for the system
 
-Real Test is not just displaying a few logging statements 
-to propagate the message to the user, but to also make the flow 
-easier to follow for the user of the application. 
+Following details the flow of specific cases Bitcoin Alerts was created for.
 
-In order to make it easier for the user to understand what messages are they going 
-through and what can be the consequences of these messsages.
+The flow starts when client subscribes to the Push Notifications and grants necessary permissions for the Push Notifications to work. Afterwards, the Subscription is send to the Server, where it's stored. Now, whenever the client needs to trigger a Push Notification Alert, the client makes a request to a server endpoint, either using the provided UI Client known as Bitcoin Alerts Admin or manually to a URL. Afterwards, server retrieves the latest Bitcoin Exchange rate and uses the credentials previously stored to prepare a request to be sent to the Push Server 
+in order to trigger a Push Event on the client. 
 
-#### We have updates for three of the subscriptions to the server
+This is an abstract summary of the application and doesn't contain any programmatic details. VAPID and various content encryptions mechanism are delegated to the open sourced [web-push](https://github.com/web-push-libs/web-push) library provided for [node.js](https://nodejs.org).
 
-1. Updating the Subscription on the Server
-2. Deleting the Subscription from the Server
-3. Creating a subscription on the Server
+## Questions 
 
-All three are very important to be read, as they are needed
-to establish the proper connections in the server. So it'll be important 
-to identify scenarios in which we should make a request to the server
-in all three cases.
+### How are alerts pushed?
 
+There's no rocket sceince in how we do it, we use an Admin page, which sends a request to the server component
+of our application to push alerts to either all or one specific subscriber. That's pretty much it. In a system with real world implications, this push event can be launched in response to an event related to bitcoins or on a schedules, there are many ways this can happen. The goal here is to launch it using the simplest system.
 
-#### Updating the ServiceWorker
+<!--
+  Details about the Contributions, tell that this project is not done yet and any 
+  ammendments and features to be 
+-->
+## Contributions
 
-ServiceWorker is going to do most of the formatting required to display 
-the message on the Client side, from Server Side it's going to obtain the useful data,
-such as the rate and currency, it's the client responsibility  
-to generate useful messages.
+## LICENSE
 
-If the type is unknown, a generic push notification can be displayed which
-is sufficient for the use case at hand.
-
-##### Welcome Push Notification
-
-Welcome Push Notification is not going to display the welcome, but represents the 
-first notification any user should receive when they subscribe to the bitcoin application,
-discussion related to the design of this notification.
-
-This notification should take the user back to the bitcoin alerts 
-website, or create a client to take the user back to this website. This can be done 
-both using the action as well as a generic touch/click event on the notification.
-
-Designing the notifications and the associated images for these notifications
-- Badge (Android badge for any bitcoin would work)
-
-##### Bitcoin admin page
-
-In order to trigger events, we need an admin page. In reality when using an application 
-similar to Bitcoin Alerts, the notification will be triggered in response to an event such as
-a surge in the rates of Bitcoin, or any other major event related to Bitcoins but since we 
-don't have that backend. Our events are going to be triggered using an Admin Page.
-
-###### Conception of Admin Page
-
-Admin Page will trigger two events one in order to send a notification to a specific
-user using their identification and other for sending the notification
-to all users. UI should be kept relatively simple and what matters more is
-it's a lot managable and very similar to the Bitcoin Alerts Notification Page,
-but with support for admin configurations.
-
-For the first concept there can be two cards. One card can be used to send the notification 
-to all the subscribers in our list. The other card can be used to send the notification
-to a specific subscriber by using the Server id stored in the database for the subscriber.
-
-Tasks to complete for the application
-
-- Complete the Admin Page and Alert Functionality (Design is approximately done) (done)
-- Code the Bitcoin Alerts Admin Page Subscriber Card! (done)
-- Build a Production Version of client (done)
-- Implement Specific Subscriber Logic (done)
-
- Refrain from creating a new subscriber every time the page is refreshed. This is one of
- the biggest problems we are facing, as it creates multiple accounts for a given user.
- Creating a new subscription can be acheived through finding the subscribers based on the endpoint, 
-
- Creating a server id, and then getting identified by that server id,
- can be a time consuming process. A more easier thing to do will be to do the manipulations
- on the client side, and use those manipulations to make sense of the data.
-
- Add a Deploy to Now button to the Github repo.
- Eliminate Mixed Content. 
- Write README.md for the Client and Server
- Write Blog post
-
- Final task before we can move on to other things.
-
- ### Features for future
- 
- Create a wider range of control using the Admin Page present to display Bitcoin Alerts.
- Enable options for creating and removing supscribptions too.
-
-### Add a Specific Subscriber ID version
+MIT LICENSE. SEE [LICENSE](LICENSE) for more details.
