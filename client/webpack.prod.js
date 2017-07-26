@@ -42,14 +42,6 @@ const finalConfig = Merge(commonConfig, {
         screw_ie8: true,
       },
       comments: false,
-    }),
-    new webpack.DefinePlugin({
-      'process': {
-        'env': {
-          'NODE_ENV': JSON.stringify('production'),
-          'DEFAULT_SERVER_URL': JSON.stringify('https://server-xvcfivqgya.now.sh/'),
-        }
-      }
     })
   ]
 });

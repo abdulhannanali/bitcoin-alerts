@@ -64,5 +64,13 @@ module.exports = {
       excludeChunks: ['app'],
       includeExternals: true,
     }),
+    new webpack.DefinePlugin({
+      'process': {
+        'env': {
+          'NODE_ENV': process.env.NODE_ENV || 'development',
+          'DEFAULT_SERVER_URL': JSON.stringify(process.env.DEFAULT_SERVER_URL) || JSON.stringify('https://server-xvcfivqgya.now.sh/'),
+        }
+      }
+    })
   ],
 }

@@ -18,18 +18,75 @@ Bitcoin to USD using the power of [Web Push Protocol](https://developers.google.
 such as [Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging/) staying 
 true to ther power of Web.
 
-Bitcoin Alerts implements Web Push Protocol Standard and works [across browsers](http://caniuse.com/#feat=push-api) :smirk:. No authentication is required to run this demo but only some willingess and :heart.
+Bitcoin Alerts implements Web Push Protocol Standard and works [across browsers](http://caniuse.com/#feat=push-api) :smirk:. No credentials are required to run this demo :tada: but only some willingess and :heart.
 
 This applications consists of a client side, to subscribe to the Push Notificaiton as well as trigger the Push Notifications, alongwith a server side used to Trigger the Push Notifications on the server side as well as storing the subscriptions. 
 
-<!--
-  Write more about Application
-  The client side of the application and how it operates
-  The server side of the application
-  Code structure of the application
--->
+## Code Structure of the application
 
-<!--Is it necessary, It's useful but I still don't know if it's necessary to write this -->
+The Code Structure of the application consists of a separate Front end and Application Server, both are required for a fully functioning application.
+
+### Front end Application
+
+The front end application is contained within [`client/`](./client/) directory and contains the code that's related to front end.
+
+#### Webpack Usage
+
+This application is bundled using Webpack, and takes advantage of different Webpack specific features, such as automatic injection of scripts using HTMLWebpackPlugin, Entry Points, DefinePlugin etc. I want to explain about few customization options in the Webpack, but other than that, it's good to go.
+
+##### Usage of DefinePlugin
+
+Do you want to bundle this application for a Custom Server Host? Well, than you should read on, because here I explain how. One manual bruteforce stone age way, is to go into the source code and change the variable `SERVER_API_HOST` and `SERVER_BASE_URL` constants for [serverSubscription.js](./client/src/app/serverSubscription.js) and [serverApi.js](./client/src/admin/serverApi.js) to point to your own hostname. 
+
+The DefinePlugin solves this problem and makes it much easier, with the added accessibility of DefinePlugin you only need to go in `[webpack.common.js](./client/webpack.common.js)` change the properties passed to DefinePlugin, and then run `npm build` or `npm start` depending on your usecase. This makes things simple. 
+
+<!--Write more about DefinePlugin-->
+
+#### Usage of Entry points in this application
+
+Another advanced feature being used here is known as entry points, which allows us to compile different JavaScript files based on different entry points. Keeping code bases for different entry points separate and more modular. We have two major entry points in our application.
+
+1. Bitcoin Notifications Page
+2. Bitcoin Admin Page
+
+#### Bitcoin Notifications Page
+
+This entry point contains the code related to subscribing/unsubscribing the user to/from the application and sending the subscription to the Application Server. ServiceWorker also gets registered through this entry point.
+
+Entry file for this bundle is at [client/src/app/index.js](./client/src/app/index.js) and you can find the HTML template for this entry point, in which the code is injected in [./client/templates/index.html](./client/templates/index.html).
+
+The ServiceWorker file in this application listens for the major event `push` which is emitted whenever the client receives a push notification for the application. 
+
+Currently, only two types of notifications are displayed to the user. One is the `welcome` type notification which is displayed only the first time for the subscriber, whenever the subscription is stored on the server side. The other is of type `bitcoin_rate` which is displayed whenever the bitcoin rate notification is triggered. 
+
+I encourage you to take a peak in [service-worker.js](./client/src/app/service-worker.js), it's a one file based ServiceWorker, without any imports and complexities. You should take note no how `push` event is handled. Only the required data is transmitted to the service worker, icons and other such information is determined by the worker itself.
+
+#### Bitcoin Admin Page
+
+The entry point of the Bitcoin Admin page contains the code related to triggering a Bitcoin Rate Push Notification on the Server Side using a user friendly UI. The entry point for Bitcoin Admin page can be found in [`./src/admin/index.js`](./src/admin/index.js) and is simply issuing XHR Requests to the Application Server.
+
+There's also a [template](./client/templates/admin.html) associated with the admin page.
+
+### Application Server (Backend) for Bitcoin Alerts
+
+Application Server is important component in the Push Notifications flow and is required 
+in order to trigger Web Push Notifications. As a JavaScript based project, we are making use of a simple Node based backend in this project which has the following responsibilities:
+
+#### Provide a CRUD API for the PushSubscription
+In order to independently send Push Notifications to all the Subscribers we are going to store the PushSubscriptions somewhere. Since, this is a demo application I have chosen [nedb](https://github.com/louischatriot/nedb) to store the PushSubscription received from the client.
+
+However, this specific app server because of it's nature doesn't have any authentication builtin so you should either build that within this application or refrain from using it production :speak_no_evil: .
+
+#### Sends Notifications to the user using WebPush Protocol
+
+In order to send Push Notifications the application server needs to implement the Web Push Protocol and use it to communicate with different Push Services on the Web, but it's hard and time consuming to implement all this from scratch, that's why we are using an easy to use library known as [web-push](https://github.com/web-push-libs/web-push) available for nodejs to make this simple for us. 
+
+This library manages all the tough parts for us and also provides backwards compatibility support for old browsers using GCM.
+
+Now whenever the request to the `push_bitcoin` endpoint is made, it retrieves the latest price from the [CoinDesk API](https://www.coindesk.com/api/) and sends the Push Notifications to all the available subscribers.
+
+These are all the components of this application explained. For any other confusion or queries feel free to open an issue on this repository.
+
 ### Application flow for the system
 
 Following details the flow of specific cases Bitcoin Alerts was created for.
