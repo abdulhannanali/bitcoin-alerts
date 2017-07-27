@@ -20,7 +20,74 @@ true to ther power of Web.
 
 Bitcoin Alerts implements Web Push Protocol Standard and works [across browsers](http://caniuse.com/#feat=push-api) :smirk:. No credentials are required to run this demo :tada: but only some willingess and :heart.
 
-This applications consists of a client side, to subscribe to the Push Notificaiton as well as trigger the Push Notifications, alongwith a server side used to Trigger the Push Notifications on the server side as well as storing the subscriptions. 
+This applications consists of a client side, to subscribe to the Push Notificaiton as well as trigger the Push Notifications, alongwith a server side used to Trigger the Push Notifications on the server side as well as storing the subscriptions.
+
+## Installing and Building this Application
+
+The application is divided into two parts and process varies for both 
+Server and Client. So the process for both of these components of applications is explained
+below. Installation procedure is exactly the same for both of these applications.
+
+You can run either `npm install` or `yarn` depending on the package manager 
+you are using. Both should work, however, this repo only provides `package-lock.json`.
+
+### Frontend
+
+The client side can be run in the development and production mode, which differ in the output produced. The development version produces unminified output and starts using a devServer without outputting any thing to the filebased system and keeping everything in memory.
+
+While production version, produces minified output into the dist folder. 
+
+After installating dependencies you can use the following command to start the development server.
+
+```bash
+npm run start
+```
+
+In order to build the server, you can use the command `npm run build` replacing start with build.
+
+#### Modifying constants for your purpose
+
+If you want to build the application, and modify some constants such as the URL of the Server client talks to. You can do it, without mingling with the code. An easy way to do it set the following environment variables and run `npm run build` or `npm run start` based on your needs.
+
+- `DEFAULT_SERVER_URL` (Server our client talks to for storing subscriptions and triggering alerts)
+
+In order to hard set the value in webpack's config, read [Usage Of DefinePlugin](usage-of-defineplugin).
+
+
+### Application Server
+
+In order to install all the dependencies of Application Server run `npm install`.
+Running `npm start`, will start the server on port 3000.
+
+There are a few environment variables you will need to configure in order to successfully run this application server. This include the VAPID related details you need to have in order to launch the server successfully otherwise error will be thrown.
+
+#### Getting the VAPID Credentials
+
+In order to get the VAPID credentials to use for your application, you can use web-push commandline. Read their [command line guide](https://github.com/web-push-libs/web-push#command-line), it might be easiest way to generate a VAPID Public and Private key. 
+
+#### Environment variables
+
+The Environment Variables we need to set in the server are mostly related to VAPID.
+
+- `VAPID_PUBLIC_KEY` Public Key required for VAPID
+- `VAPID_PRIVATE_KEY` Private key required for VAPID
+- `VAPID_SUBJECT_EMAIL` Subject email required for VAPID
+
+#### Setting environment varibales in Developmnet
+
+In development mode you can set the environment variables in .env file to make things simple. You are also welcome to set them through other ways.
+
+Here's the format for `.env` file:
+
+```.env
+VAPID_PUBLIC_KEY=VALUE
+VAPID_PRIVATE_KEY=VALUE
+VAPID_SUBJECT_EMAIL=VALUE
+```
+
+#### Setting env variables in Production
+
+In production environment they should be a part of your environment, your cloud host must have a functionality to do that. Such as `now` or `heroku` or any other popular host provide.
 
 ## Code Structure of the application
 
